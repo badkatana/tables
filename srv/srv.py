@@ -45,11 +45,13 @@ class User(BaseModel):
     cell: str
     id: str
     role: Optional[str] = None
+    accessibility: bool
 
 
 class Role(BaseModel):
     roleName: str
     roleId: str
+    description: str
 
 
 def load_data():
@@ -96,6 +98,5 @@ async def update_roles(user_ids: str, role: str):
 @app.put("/roles/{role_id}", response_model=Dict[str, List[Role]])
 async def update_roles(role_id: str, role: str):
     return "success"
-
 
 uvicorn.run(app, port=8000)

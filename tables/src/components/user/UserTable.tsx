@@ -6,8 +6,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { Box, Button, MenuItem, Select } from "@mui/material";
-import { ROLE_TYPE } from "../../constants/role";
-import { IUser } from "../../interfaces/User";
+import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
 import { updateUsersRoles } from "../../http/functions";
 import { IRole } from "../../interfaces/IRole";
@@ -15,7 +14,6 @@ import { IRole } from "../../interfaces/IRole";
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
   const [roleSelectOpen, setRoleSelectOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(ROLE_TYPE[0].roleName);
 
   useEffect(() => {
     if (Object.keys(rowSelection).length) {
@@ -27,6 +25,7 @@ export const UserTable = () => {
 
   const { data: userData } = useQuery<IUser[]>(["users"]);
   const { data: roles } = useQuery<IRole[]>(["roles"]);
+  const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
   const mutation = useMutation(
     (data: { userIds: string; role: string }) =>
       updateUsersRoles(data.userIds, data.role),
@@ -62,6 +61,10 @@ export const UserTable = () => {
         accessorKey: "role",
         header: "Role",
       },
+      {
+        accessorKey: "accessibility",
+        header: "Accessibility",
+      },
     ],
     []
   );
@@ -89,7 +92,7 @@ export const UserTable = () => {
     const userIds = userIds1.join(",");
     const role = selectedRole;
     mutation.mutate({ userIds, role });
-    setSelectedRole(ROLE_TYPE[0].roleName);
+    setSelectedRole(roles![0].roleName);
     setRowSelection({});
   };
 

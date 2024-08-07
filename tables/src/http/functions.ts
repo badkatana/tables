@@ -1,5 +1,5 @@
 import $host from ".";
-import { IUser } from "../interfaces/User";
+import { IUser } from "../interfaces/IUser";
 
 export const getUsers = async (): Promise<IUser[]> => {
   const { data } = await $host.get("/users");

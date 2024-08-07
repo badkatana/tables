@@ -5,7 +5,7 @@ import { SyntheticEvent, useState } from "react";
 import { RoleTable } from "./components/roles/RoleTable";
 import { useQuery } from "react-query";
 import { getRoles, getUsers } from "./http/functions";
-import { IUser } from "./interfaces/User";
+import { IUser } from "./interfaces/IUser";
 import { IRole } from "./interfaces/IRole";
 
 function TabsProps(index: number) {

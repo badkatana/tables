@@ -4,8 +4,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useMemo } from "react";
-import { ROLE_TYPE } from "../../constants/role";
-import { IUser } from "../../interfaces/User";
+import { IUser } from "../../interfaces/IUser";
 import { useQuery } from "react-query";
 import { IRole } from "../../interfaces/IRole";
 
@@ -17,6 +16,7 @@ type RoleTableProps = {
 interface IRoleTable {
   roleName: string;
   usersArray: string[];
+  description: string;
 }
 
 export const RoleTable = (props: RoleTableProps) => {
@@ -29,6 +29,10 @@ export const RoleTable = (props: RoleTableProps) => {
       {
         accessorKey: "usersArray",
         header: "Users",
+      },
+      {
+        accessorKey: "description",
+        header: "Description",
       },
     ],
     []
@@ -48,6 +52,7 @@ export const RoleTable = (props: RoleTableProps) => {
     for (let i = 0; i < roles.length; i++) {
       const roleRow: IRoleTable = {
         roleName: roles[i].roleName,
+        description: roles[i].description || "",
         usersArray: users
           .filter((user) => user.role === roles[i].roleName)
           .map((user) => `${user.name.first} ${user.name.last}`),

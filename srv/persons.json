@@ -13,7 +13,8 @@
       "phone": "04-9472-1151",
       "cell": "0460-031-829",
       "id": "032956224",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -28,7 +29,8 @@
       "phone": "70719662",
       "cell": "99968507",
       "id": "06117733031",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -44,7 +46,8 @@
       "phone": "(533)-157-2718",
       "cell": "(125)-623-2324",
       "id": "2383304323",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -59,7 +62,8 @@
       "phone": "31176512",
       "cell": "81491569",
       "id": "290168-0396",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -74,7 +78,8 @@
       "phone": "031-218-2385",
       "cell": "081-129-3561",
       "id": "0283250T",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -89,7 +94,8 @@
       "phone": "(015) 2408721",
       "cell": "(06) 67266036",
       "id": "67530479",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -104,7 +110,8 @@
       "phone": "0389-7846396",
       "cell": "0177-6650376",
       "id": "66 160992 L 218",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -119,7 +126,8 @@
       "phone": "071-634-9478",
       "cell": "081-020-5713",
       "id": "8614284T",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -134,7 +142,8 @@
       "phone": "62283008",
       "cell": "35263596",
       "id": "150598-3746",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -149,7 +158,8 @@
       "phone": "037-6441-516",
       "cell": "069-9007-302",
       "id": "938143655",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -164,7 +174,8 @@
       "phone": "012-9983-441",
       "cell": "068-4621-472",
       "id": "061484963",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -179,7 +190,8 @@
       "phone": "07-3965-2035",
       "cell": "0422-394-228",
       "id": "131035915",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -194,7 +206,8 @@
       "phone": "(065) 7157292",
       "cell": "(06) 13606083",
       "id": "04335948",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -209,7 +222,8 @@
       "phone": "B65 E49-5279",
       "cell": "C97 P38-8115",
       "id": "796924785",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -224,7 +238,8 @@
       "phone": "06-5550-7992",
       "cell": "0495-382-543",
       "id": "768426225",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -239,7 +254,8 @@
       "phone": "E74 A64-4320",
       "cell": "I14 L78-1711",
       "id": "825855661",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "female",
@@ -254,7 +270,8 @@
       "phone": "32831222",
       "cell": "98263740",
       "id": "26026534444",
-      "role": ""
+      "role": "",
+      "accessibility": true
     },
     {
       "gender": "male",
@@ -269,7 +286,8 @@
       "phone": "031-9408-082",
       "cell": "062-1648-721",
       "id": "322764132",
-      "role": ""
+      "role": "",
+      "accessibility": true
     }
   ]
 }

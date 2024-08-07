@@ -16,5 +16,6 @@ export interface IUser {
   };
   phone: string;
   role?: string;
+  accessibility?: string;
   id: string;
 }
