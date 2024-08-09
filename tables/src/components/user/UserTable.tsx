@@ -64,7 +64,7 @@ export const UserTable = () => {
       console.log("к");
     },
     onError: (error) => {
-      console.log("ну всё пизда");
+      console.log("error here");
     },
   });
 
