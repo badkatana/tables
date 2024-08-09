@@ -5,16 +5,22 @@ import {
   MRT_RowSelectionState,
   useMaterialReactTable,
 } from "material-react-table";
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box, Button, IconButton, MenuItem, Select } from "@mui/material";
 import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
-import { updateUsersRoles } from "../../http/functions";
+import { deleteUser, updateUsersRoles } from "../../http/functions";
 import { IRole } from "../../interfaces/IRole";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
+import { DeleteUserModal } from "./deleteUserModal/deleteUserModal";
 
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
   const [roleSelectOpen, setRoleSelectOpen] = useState(false);
-
+  const [data, setData] = useState<IUser[]>();
+  const [personToDelete, setPersonToDelete] = useState<IUser>();
+  const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
+  const { data: userData } = useQuery<IUser[]>(["users"]);
   useEffect(() => {
     if (Object.keys(rowSelection).length) {
       setRoleSelectOpen(true);
@@ -23,9 +29,13 @@ export const UserTable = () => {
     }
   }, [rowSelection]);
 
-  const { data: userData } = useQuery<IUser[]>(["users"]);
+  useEffect(() => {
+    setData(userData);
+  }, [userData]);
+
   const { data: roles } = useQuery<IRole[]>(["roles"]);
   const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
+
   const mutation = useMutation(
     (data: { userIds: string; role: string }) =>
       updateUsersRoles(data.userIds, data.role),
@@ -37,6 +47,19 @@ export const UserTable = () => {
         console.error("Error updating users:", error);
       },
     }
+  );
+
+  const deleteMutation = useMutation((userId: string) => deleteUser(userId), {
+    onSuccess: (data) => {
+      console.log("Users updated successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error updating users:", error);
+    },
+  });
+
+  const updateMutation = useMutation(
+    (data: { userId: string; newInfo: IUser }) => {}
   );
 
   const columns = useMemo<MRT_ColumnDef<IUser>[]>(
@@ -54,10 +77,6 @@ export const UserTable = () => {
         header: "Email",
       },
       {
-        accessorKey: "dob.age",
-        header: "Age",
-      },
-      {
         accessorKey: "role",
         header: "Role",
       },
@@ -71,24 +90,62 @@ export const UserTable = () => {
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: userData || [],
+    data: data || [],
     defaultDisplayColumn: { enableResizing: true },
     enableColumnResizing: true,
     enableColumnOrdering: true,
     enableStickyHeader: true,
     enableStickyFooter: true,
     enableRowSelection: true,
-    positionToolbarAlertBanner: "bottom",
+    positionActionsColumn: "last",
     onRowSelectionChange: setRowSelection,
-    state: { rowSelection },
+    state: { rowSelection, columnVisibility: { id: false } },
+    enableRowActions: true,
+    onEditingRowSave: ({ table, values }) => {
+      // here will be new mutation
+      table.setEditingRow(null);
+    },
+    renderRowActions: ({ row }) => (
+      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
+        <IconButton
+          onClick={() => {
+            table.setEditingRow(row);
+          }}
+        >
+          <CreateRoundedIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            setPersonToDelete(data![row.index]);
+            setDeleteModalVisible(true);
+          }}
+        >
+          <DeleteOutlineRoundedIcon />
+        </IconButton>
+      </Box>
+    ),
   });
+
+  const handleUserDelete = (confirmed: boolean) => {
+    if (confirmed) {
+      deleteMutation.mutate(personToDelete!.id);
+      const updatedData = data!.filter(
+        (person) => person.id != personToDelete!.id
+      );
+      setData(updatedData);
+    }
+    setPersonToDelete(undefined);
+    setDeleteModalVisible(false);
+  };
 
   const handleSelectionClick = () => {
     const rowIndexed = Object.keys(rowSelection).map((key) => parseInt(key));
     const userIds1 = [];
     for (let i = 0; i < rowIndexed.length; i++) {
       userIds1.push(userData![rowIndexed[i]].id);
+      data![rowIndexed[i]].role = selectedRole;
     }
+    setData([...data!]);
     const userIds = userIds1.join(",");
     const role = selectedRole;
     mutation.mutate({ userIds, role });
@@ -114,6 +171,10 @@ export const UserTable = () => {
           <Button onClick={(e) => setRowSelection({})}>Cancel</Button>
         </Box>
       ) : null}
+      <DeleteUserModal
+        open={deleteModalVisible}
+        handleClose={handleUserDelete}
+      />
       <MaterialReactTable table={table} />;
     </Box>
   );

@@ -17,3 +17,8 @@ export const updateUsersRoles = async (usersId: string, role: string) => {
   });
   return data;
 };
+
+export const deleteUser = async (userId: string) => {
+  const { data } = await $host.delete(`/users/${userId}`);
+  return data;
+};

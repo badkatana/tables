@@ -1,293 +1,376 @@
 {
-  "results": [
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Willard", "last": "Ryan" },
-      "location": {
-        "city": "Adelaide",
-        "state": "South Australia",
-        "country": "Australia"
-      },
-      "email": "willard.ryan@example.com",
-      "dob": { "date": "1998-08-26T03:15:07.047Z", "age": 25 },
-      "phone": "04-9472-1151",
-      "cell": "0460-031-829",
-      "id": "032956224",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Miss", "first": "Lotte", "last": "Hagland" },
-      "location": {
-        "city": "Fetsund",
-        "state": "Sør-Trøndelag",
-        "country": "Norway"
-      },
-      "email": "lotte.hagland@example.com",
-      "dob": { "date": "1977-11-06T18:36:48.107Z", "age": 46 },
-      "phone": "70719662",
-      "cell": "99968507",
-      "id": "06117733031",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Mrs", "first": "Mestan", "last": "Demirel" },
-      "location": {
-        "city": "Van",
-        "state": "Çorum",
-        "country": "Turkey"
-      },
-      "email": "mestan.demirel@example.com",
-      "dob": { "date": "1964-02-23T10:00:55.305Z", "age": 60 },
-      "registered": { "date": "2021-09-24T14:19:42.485Z", "age": 2 },
-      "phone": "(533)-157-2718",
-      "cell": "(125)-623-2324",
-      "id": "2383304323",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Miss", "first": "Julie", "last": "Andersen" },
-      "location": {
-        "city": "Nykøbing Sj.",
-        "state": "Sjælland",
-        "country": "Denmark"
-      },
-      "email": "julie.andersen@example.com",
-      "dob": { "date": "1968-01-29T06:45:14.999Z", "age": 56 },
-      "phone": "31176512",
-      "cell": "81491569",
-      "id": "290168-0396",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Miss", "first": "Susanne", "last": "Martinez" },
-      "location": {
-        "city": "Clonmel",
-        "state": "Kildare",
-        "country": "Ireland"
-      },
-      "email": "susanne.martinez@example.com",
-      "dob": { "date": "1985-12-04T17:05:41.669Z", "age": 38 },
-      "phone": "031-218-2385",
-      "cell": "081-129-3561",
-      "id": "0283250T",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Ayoub", "last": "De Groote" },
-      "location": {
-        "city": "Winsum Fr",
-        "state": "Flevoland",
-        "country": "Netherlands"
-      },
-      "email": "ayoub.degroote@example.com",
-      "dob": { "date": "1984-12-08T10:23:18.018Z", "age": 39 },
-      "phone": "(015) 2408721",
-      "cell": "(06) 67266036",
-      "id": "67530479",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Ansgar", "last": "Linnemann" },
-      "location": {
-        "city": "Röbel/Müritz",
-        "state": "Bremen",
-        "country": "Germany"
-      },
-      "email": "ansgar.linnemann@example.com",
-      "dob": { "date": "1992-09-16T10:16:17.212Z", "age": 31 },
-      "phone": "0389-7846396",
-      "cell": "0177-6650376",
-      "id": "66 160992 L 218",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Alfred", "last": "Ray" },
-      "location": {
-        "city": "Ballinasloe",
-        "state": "Donegal",
-        "country": "Ireland"
-      },
-      "email": "alfred.ray@example.com",
-      "dob": { "date": "1963-08-28T21:56:21.648Z", "age": 60 },
-      "phone": "071-634-9478",
-      "cell": "081-020-5713",
-      "id": "8614284T",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Bertram", "last": "Petersen" },
-      "location": {
-        "city": "Lundby",
-        "state": "Midtjylland",
-        "country": "Denmark"
-      },
-      "email": "bertram.petersen@example.com",
-      "dob": { "date": "1998-05-15T23:01:28.497Z", "age": 26 },
-      "phone": "62283008",
-      "cell": "35263596",
-      "id": "150598-3746",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Ms", "first": "Svetlana", "last": "Milovanović" },
-      "location": {
-        "city": "Zaječar",
-        "state": "Kolubara",
-        "country": "Serbia"
-      },
-      "email": "svetlana.milovanovic@example.com",
-      "dob": { "date": "1962-10-30T11:23:52.198Z", "age": 61 },
-      "phone": "037-6441-516",
-      "cell": "069-9007-302",
-      "id": "938143655",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Mrs", "first": "Radmila", "last": "Trajković" },
-      "location": {
-        "city": "Žabari",
-        "state": "Peć",
-        "country": "Serbia"
-      },
-      "email": "radmila.trajkovic@example.com",
-      "dob": { "date": "1955-01-02T18:45:32.118Z", "age": 69 },
-      "phone": "012-9983-441",
-      "cell": "068-4621-472",
-      "id": "061484963",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Ian", "last": "Butler" },
-      "location": {
-        "city": "Mackay",
-        "state": "Victoria",
-        "country": "Australia"
-      },
-      "email": "ian.butler@example.com",
-      "dob": { "date": "1995-02-12T20:16:16.817Z", "age": 29 },
-      "phone": "07-3965-2035",
-      "cell": "0422-394-228",
-      "id": "131035915",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Miss", "first": "Trudy", "last": "Van Kol" },
-      "location": {
-        "city": "Hoorn Nh",
-        "state": "Zeeland",
-        "country": "Netherlands"
-      },
-      "email": "trudy.vankol@example.com",
-      "dob": { "date": "1973-08-20T23:12:47.352Z", "age": 50 },
-      "phone": "(065) 7157292",
-      "cell": "(06) 13606083",
-      "id": "04335948",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Etienne", "last": "Thompson" },
-      "location": {
-        "city": "Sidney",
-        "state": "Newfoundland and Labrador",
-        "country": "Canada"
-      },
-      "email": "etienne.thompson@example.com",
-      "dob": { "date": "1965-02-11T17:26:00.462Z", "age": 59 },
-      "phone": "B65 E49-5279",
-      "cell": "C97 P38-8115",
-      "id": "796924785",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Ms", "first": "Krin", "last": "Barrett" },
-      "location": {
-        "city": "Ballarat",
-        "state": "Queensland",
-        "country": "Australia"
-      },
-      "email": "krin.barrett@example.com",
-      "dob": { "date": "1968-01-03T14:35:31.092Z", "age": 56 },
-      "phone": "06-5550-7992",
-      "cell": "0495-382-543",
-      "id": "768426225",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Xavier", "last": "Bergeron" },
-      "location": {
-        "city": "Borden",
-        "state": "Prince Edward Island",
-        "country": "Canada"
-      },
-      "email": "xavier.bergeron@example.com",
-      "dob": { "date": "1986-02-01T09:22:42.774Z", "age": 38 },
-      "phone": "E74 A64-4320",
-      "cell": "I14 L78-1711",
-      "id": "825855661",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "female",
-      "name": { "title": "Miss", "first": "Kamilla", "last": "Mjånes" },
-      "location": {
-        "city": "Tofte",
-        "state": "Hedmark",
-        "country": "Norway"
-      },
-      "email": "kamilla.mjanes@example.com",
-      "dob": { "date": "1965-02-26T10:54:37.634Z", "age": 59 },
-      "phone": "32831222",
-      "cell": "98263740",
-      "id": "26026534444",
-      "role": "",
-      "accessibility": true
-    },
-    {
-      "gender": "male",
-      "name": { "title": "Mr", "first": "Zoran", "last": "Simić" },
-      "location": {
-        "city": "Novi Pazar",
-        "state": "South Banat",
-        "country": "Serbia"
-      },
-      "email": "zoran.simic@example.com",
-      "dob": { "date": "1979-12-21T22:30:37.773Z", "age": 44 },
-      "phone": "031-9408-082",
-      "cell": "062-1648-721",
-      "id": "322764132",
-      "role": "",
-      "accessibility": true
-    }
-  ]
+    "results": [
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Willard",
+                "last": "Ryan"
+            },
+            "location": {
+                "city": "Adelaide",
+                "state": "South Australia",
+                "country": "Australia"
+            },
+            "email": "willard.ryan@example.com",
+            "dob": {
+                "date": "1998-08-26T03:15:07.047Z",
+                "age": 25
+            },
+            "phone": "04-9472-1151",
+            "cell": "0460-031-829",
+            "id": "032956224",
+            "role": "just good person",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Miss",
+                "first": "Lotte",
+                "last": "Hagland"
+            },
+            "location": {
+                "city": "Fetsund",
+                "state": "S\u0413\u0451r-Tr\u0413\u0451ndelag",
+                "country": "Norway"
+            },
+            "email": "lotte.hagland@example.com",
+            "dob": {
+                "date": "1977-11-06T18:36:48.107Z",
+                "age": 46
+            },
+            "phone": "70719662",
+            "cell": "99968507",
+            "id": "06117733031",
+            "role": "admin",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Mrs",
+                "first": "Mestan",
+                "last": "Demirel"
+            },
+            "location": {
+                "city": "Van",
+                "state": "\u0413\u2021orum",
+                "country": "Turkey"
+            },
+            "email": "mestan.demirel@example.com",
+            "dob": {
+                "date": "1964-02-23T10:00:55.305Z",
+                "age": 60
+            },
+            "registered": {
+                "date": "2021-09-24T14:19:42.485Z",
+                "age": 2
+            },
+            "phone": "(533)-157-2718",
+            "cell": "(125)-623-2324",
+            "id": "2383304323",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Miss",
+                "first": "Julie",
+                "last": "Andersen"
+            },
+            "location": {
+                "city": "Nyk\u0413\u0451bing Sj.",
+                "state": "Sj\u0413\u00a6lland",
+                "country": "Denmark"
+            },
+            "email": "julie.andersen@example.com",
+            "dob": {
+                "date": "1968-01-29T06:45:14.999Z",
+                "age": 56
+            },
+            "phone": "31176512",
+            "cell": "81491569",
+            "id": "290168-0396",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Miss",
+                "first": "Susanne",
+                "last": "Martinez"
+            },
+            "location": {
+                "city": "Clonmel",
+                "state": "Kildare",
+                "country": "Ireland"
+            },
+            "email": "susanne.martinez@example.com",
+            "dob": {
+                "date": "1985-12-04T17:05:41.669Z",
+                "age": 38
+            },
+            "phone": "031-218-2385",
+            "cell": "081-129-3561",
+            "id": "0283250T",
+            "role": "developer",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Ayoub",
+                "last": "De Groote"
+            },
+            "location": {
+                "city": "Winsum Fr",
+                "state": "Flevoland",
+                "country": "Netherlands"
+            },
+            "email": "ayoub.degroote@example.com",
+            "dob": {
+                "date": "1984-12-08T10:23:18.018Z",
+                "age": 39
+            },
+            "phone": "(015) 2408721",
+            "cell": "(06) 67266036",
+            "id": "67530479",
+            "role": "developer",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Ansgar",
+                "last": "Linnemann"
+            },
+            "location": {
+                "city": "R\u0413\u00b6bel/M\u0413\u0458ritz",
+                "state": "Bremen",
+                "country": "Germany"
+            },
+            "email": "ansgar.linnemann@example.com",
+            "dob": {
+                "date": "1992-09-16T10:16:17.212Z",
+                "age": 31
+            },
+            "phone": "0389-7846396",
+            "cell": "0177-6650376",
+            "id": "66 160992 L 218",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Alfred",
+                "last": "Ray"
+            },
+            "location": {
+                "city": "Ballinasloe",
+                "state": "Donegal",
+                "country": "Ireland"
+            },
+            "email": "alfred.ray@example.com",
+            "dob": {
+                "date": "1963-08-28T21:56:21.648Z",
+                "age": 60
+            },
+            "phone": "071-634-9478",
+            "cell": "081-020-5713",
+            "id": "8614284T",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Bertram",
+                "last": "Petersen"
+            },
+            "location": {
+                "city": "Lundby",
+                "state": "Midtjylland",
+                "country": "Denmark"
+            },
+            "email": "bertram.petersen@example.com",
+            "dob": {
+                "date": "1998-05-15T23:01:28.497Z",
+                "age": 26
+            },
+            "phone": "62283008",
+            "cell": "35263596",
+            "id": "150598-3746",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Ian",
+                "last": "Butler"
+            },
+            "location": {
+                "city": "Mackay",
+                "state": "Victoria",
+                "country": "Australia"
+            },
+            "email": "ian.butler@example.com",
+            "dob": {
+                "date": "1995-02-12T20:16:16.817Z",
+                "age": 29
+            },
+            "phone": "07-3965-2035",
+            "cell": "0422-394-228",
+            "id": "131035915",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Miss",
+                "first": "Trudy",
+                "last": "Van Kol"
+            },
+            "location": {
+                "city": "Hoorn Nh",
+                "state": "Zeeland",
+                "country": "Netherlands"
+            },
+            "email": "trudy.vankol@example.com",
+            "dob": {
+                "date": "1973-08-20T23:12:47.352Z",
+                "age": 50
+            },
+            "phone": "(065) 7157292",
+            "cell": "(06) 13606083",
+            "id": "04335948",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Etienne",
+                "last": "Thompson"
+            },
+            "location": {
+                "city": "Sidney",
+                "state": "Newfoundland and Labrador",
+                "country": "Canada"
+            },
+            "email": "etienne.thompson@example.com",
+            "dob": {
+                "date": "1965-02-11T17:26:00.462Z",
+                "age": 59
+            },
+            "phone": "B65 E49-5279",
+            "cell": "C97 P38-8115",
+            "id": "796924785",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Ms",
+                "first": "Krin",
+                "last": "Barrett"
+            },
+            "location": {
+                "city": "Ballarat",
+                "state": "Queensland",
+                "country": "Australia"
+            },
+            "email": "krin.barrett@example.com",
+            "dob": {
+                "date": "1968-01-03T14:35:31.092Z",
+                "age": 56
+            },
+            "phone": "06-5550-7992",
+            "cell": "0495-382-543",
+            "id": "768426225",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Xavier",
+                "last": "Bergeron"
+            },
+            "location": {
+                "city": "Borden",
+                "state": "Prince Edward Island",
+                "country": "Canada"
+            },
+            "email": "xavier.bergeron@example.com",
+            "dob": {
+                "date": "1986-02-01T09:22:42.774Z",
+                "age": 38
+            },
+            "phone": "E74 A64-4320",
+            "cell": "I14 L78-1711",
+            "id": "825855661",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "female",
+            "name": {
+                "title": "Miss",
+                "first": "Kamilla",
+                "last": "Mj\u0413\u0490nes"
+            },
+            "location": {
+                "city": "Tofte",
+                "state": "Hedmark",
+                "country": "Norway"
+            },
+            "email": "kamilla.mjanes@example.com",
+            "dob": {
+                "date": "1965-02-26T10:54:37.634Z",
+                "age": 59
+            },
+            "phone": "32831222",
+            "cell": "98263740",
+            "id": "26026534444",
+            "role": "",
+            "accessibility": true
+        },
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Zoran",
+                "last": "Simi\u0414\u2021"
+            },
+            "location": {
+                "city": "Novi Pazar",
+                "state": "South Banat",
+                "country": "Serbia"
+            },
+            "email": "zoran.simic@example.com",
+            "dob": {
+                "date": "1979-12-21T22:30:37.773Z",
+                "age": 44
+            },
+            "phone": "031-9408-082",
+            "cell": "062-1648-721",
+            "id": "322764132",
+            "role": "",
+            "accessibility": true
+        }
+    ]
 }
