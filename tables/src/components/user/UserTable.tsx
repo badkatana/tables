@@ -103,6 +103,16 @@ export const UserTable = () => {
     []
   );
 
+  const handleRowUpdating = (values: any) => {
+    const userToUpdate = data!.find((user) => user.id === values.id);
+    if (userToUpdate) {
+      userToUpdate.name.first = values["name.first"];
+      userToUpdate.name.last = values["name.last"];
+      userToUpdate.email = values.email;
+      userToUpdate.accessibility = values.accessibility;
+      updateMutation.mutate(userToUpdate);
+    }
+  };
   const table = useMaterialReactTable({
     columns: columns,
     data: data || [],
@@ -117,14 +127,7 @@ export const UserTable = () => {
     state: { rowSelection, columnVisibility: { id: false } },
     enableRowActions: true,
     onEditingRowSave: ({ table, values }) => {
-      const userToUpdate = data!.find((user) => user.id === values.id);
-      if (userToUpdate) {
-        userToUpdate.name.first = values["name.first"];
-        userToUpdate.name.last = values["name.last"];
-        userToUpdate.email = values.email;
-        userToUpdate.accessibility = values.accessibility;
-        updateMutation.mutate(userToUpdate);
-      }
+      handleRowUpdating(values);
       table.setEditingRow(null);
     },
     renderRowActions: ({ row }) => (
