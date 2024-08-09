@@ -22,3 +22,12 @@ export const deleteUser = async (userId: string) => {
   const { data } = await $host.delete(`/users/${userId}`);
   return data;
 };
+
+export const updateUser = async (updatedUser: IUser) => {
+  const response = await $host.put(
+    `/users/update/${updatedUser.id}`,
+    updatedUser
+  );
+
+  return response.data;
+};

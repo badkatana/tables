@@ -8,7 +8,7 @@ import {
 import { Box, Button, IconButton, MenuItem, Select } from "@mui/material";
 import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
-import { deleteUser, updateUsersRoles } from "../../http/functions";
+import { deleteUser, updateUser, updateUsersRoles } from "../../http/functions";
 import { IRole } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
@@ -21,6 +21,9 @@ export const UserTable = () => {
   const [personToDelete, setPersonToDelete] = useState<IUser>();
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const { data: userData } = useQuery<IUser[]>(["users"]);
+  const { data: roles } = useQuery<IRole[]>(["roles"]);
+  const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
+
   useEffect(() => {
     if (Object.keys(rowSelection).length) {
       setRoleSelectOpen(true);
@@ -32,9 +35,6 @@ export const UserTable = () => {
   useEffect(() => {
     setData(userData);
   }, [userData]);
-
-  const { data: roles } = useQuery<IRole[]>(["roles"]);
-  const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
 
   const mutation = useMutation(
     (data: { userIds: string; role: string }) =>
@@ -58,12 +58,25 @@ export const UserTable = () => {
     },
   });
 
-  const updateMutation = useMutation(
-    (data: { userId: string; newInfo: IUser }) => {}
-  );
+  const updateMutation = useMutation({
+    mutationFn: (updatedData: IUser) => updateUser(updatedData),
+    onSuccess: () => {
+      console.log("к");
+    },
+    onError: (error) => {
+      console.log("ну всё пизда");
+    },
+  });
 
   const columns = useMemo<MRT_ColumnDef<IUser>[]>(
     () => [
+      {
+        accessorKey: "id",
+        header: "ID",
+        enableEditing: false,
+        enableSorting: false,
+        size: 0,
+      },
       {
         accessorKey: "name.first",
         header: "First Name",
@@ -102,7 +115,14 @@ export const UserTable = () => {
     state: { rowSelection, columnVisibility: { id: false } },
     enableRowActions: true,
     onEditingRowSave: ({ table, values }) => {
-      // here will be new mutation
+      const userToUpdate = data!.find((user) => user.id === values.id);
+      if (userToUpdate) {
+        userToUpdate.name.first = values["name.first"];
+        userToUpdate.name.last = values["name.last"];
+        userToUpdate.email = values.email;
+        userToUpdate.accessibility = values.accessibility;
+        updateMutation.mutate(userToUpdate);
+      }
       table.setEditingRow(null);
     },
     renderRowActions: ({ row }) => (

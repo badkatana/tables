@@ -4,15 +4,15 @@
             "gender": "male",
             "name": {
                 "title": "Mr",
-                "first": "Willard",
-                "last": "Ryan"
+                "first": "Matthew",
+                "last": "Ryanne"
             },
             "location": {
                 "city": "Adelaide",
                 "state": "South Australia",
                 "country": "Australia"
             },
-            "email": "willard.ryan@example.com",
+            "email": "matthew.ryanne@example.com",
             "dob": {
                 "date": "1998-08-26T03:15:07.047Z",
                 "age": 25
@@ -62,10 +62,6 @@
             "dob": {
                 "date": "1964-02-23T10:00:55.305Z",
                 "age": 60
-            },
-            "registered": {
-                "date": "2021-09-24T14:19:42.485Z",
-                "age": 2
             },
             "phone": "(533)-157-2718",
             "cell": "(125)-623-2324",

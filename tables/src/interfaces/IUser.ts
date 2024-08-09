@@ -6,8 +6,6 @@ export interface IUser {
   };
   location: {
     city: string;
-    state: string;
-    country: string;
   };
   email: string;
   dob: {

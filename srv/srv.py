@@ -10,7 +10,6 @@ origins = ["http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
-    # Замените "*" на список разрешенных доменов в продакшн среде
     allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -90,8 +89,29 @@ async def get_roles():
     return roles
 
 
+@app.put("/users/update/{user_id}", response_model=User)
+async def update_user(user_new: User):
+    print(user_new)
+    try:
+        users_data = load_json(PERSONS_FILE)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Users file not found")
+
+    users_list = users_data.get("results", [])
+
+    for index, existing_user in enumerate(users_list):
+        if existing_user['id'] == user_new.id:
+            for key, value in user_new.model_dump().items():
+                if value is not None:  # или используйте проверку на 'undefined'
+                    existing_user[key] = value
+            save_json(PERSONS_FILE, {"results": users_list})
+            return existing_user  # Возвращаем обновленного пользователя
+
+    raise HTTPException(status_code=404, detail="User not found")
+
+
 @app.put("/users/{user_ids}", response_model=Dict[str, List[User]])
-async def update_roles(user_ids: str, role: str):
+async def update_roles_users(user_ids: str, role: str):
     data = load_json(PERSONS_FILE)
     ids = user_ids.split(",")
     updated_users = []
