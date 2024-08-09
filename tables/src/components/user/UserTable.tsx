@@ -92,10 +92,12 @@ export const UserTable = () => {
       {
         accessorKey: "role",
         header: "Role",
+        enableEditing: false,
       },
       {
         accessorKey: "accessibility",
         header: "Accessibility",
+        enableEditing: false,
       },
     ],
     []
