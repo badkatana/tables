@@ -1,4 +1,4 @@
-import { Box, Slide, Snackbar, SnackbarOrigin } from "@mui/material";
+import { Box, Slide, Snackbar } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { forwardRef, ReactElement, Ref } from "react";
 

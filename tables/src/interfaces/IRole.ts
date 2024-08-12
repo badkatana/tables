@@ -3,3 +3,10 @@ export interface IRole {
   roleId: number;
   description?: string;
 }
+
+export interface IRoleTable {
+  roleId: number;
+  roleName: string;
+  usersArray: string[];
+  description: string;
+}
