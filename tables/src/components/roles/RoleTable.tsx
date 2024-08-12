@@ -12,7 +12,7 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import { Box, Button, IconButton } from "@mui/material";
 import { RoleEditModalWindow } from "./RoleModalWindow";
-import { createRole, editRole } from "../../http/functions";
+import { createRole, deleteRole, editRole } from "../../http/functions";
 
 type RoleTableProps = {
   projectName: string;
@@ -94,6 +94,8 @@ export const RoleTable = (props: RoleTableProps) => {
     createMutation.mutate(newRole);
   };
 
+  const deleteMutation = useMutation((roleId: string) => deleteRole(roleId));
+
   const handleEditRole = (values: any) => {
     const editedRole: IRole = {
       roleId: editingRole!.original.roleId,
@@ -133,7 +135,11 @@ export const RoleTable = (props: RoleTableProps) => {
         >
           <CreateRoundedIcon />
         </IconButton>
-        <IconButton onClick={() => {}}>
+        <IconButton
+          onClick={() => {
+            deleteMutation.mutate(row.original.roleId.toString());
+          }}
+        >
           <DeleteOutlineRoundedIcon />
         </IconButton>
       </Box>

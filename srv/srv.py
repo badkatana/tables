@@ -172,11 +172,19 @@ def delete_user(user_id: str):
 @app.delete("/roles/{role_id}", response_model=List[Role])
 def delete_role(role_id: str):
     roles = load_json(ROLES_FILE)
+    users = load_json(PERSONS_FILE)
     updated_roles = [role for role in roles if role["roleId"] != role_id]
+    role_name = next((oldRole['roleName'] for oldRole in roles if oldRole.get(
+        'roleId') == role_id), None)
+
+    for user in users["results"]:
+        if user["role"] == role_name:
+            user['role'] = ""
 
     if len(updated_roles) == len(roles):
         raise HTTPException(status_code=404, detail="Role not found")
     save_json(ROLES_FILE, updated_roles)
+    save_json(PERSONS_FILE, users)
     return updated_roles
 
 
