@@ -12,8 +12,8 @@ import { deleteUser, updateUser, updateUsersRoles } from "../../http/functions";
 import { IRole } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
-import { DeleteUserModal } from "./deleteUserModal/deleteUserModal";
-import { NotifyUser } from "../notifications/snackbar";
+import { DeleteUserModal } from "./deleteUserModal";
+import { NotifyUser } from "../generic/snackbar";
 
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
@@ -57,10 +57,10 @@ export const UserTable = () => {
 
   const deleteMutation = useMutation((userId: string) => deleteUser(userId), {
     onSuccess: (data) => {
-      console.log("Users updated successfully:", data);
+      setSnackbarMessage("User deleted successfully");
     },
     onError: (error) => {
-      console.error("Error updating users:", error);
+      setSnackbarMessage("Error occured during user delete");
     },
   });
 
@@ -119,6 +119,7 @@ export const UserTable = () => {
       updateMutation.mutate(userToUpdate);
     }
   };
+
   const table = useMaterialReactTable({
     columns: columns,
     data: data || [],

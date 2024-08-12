@@ -7,7 +7,7 @@ import {
 import { useMemo, useState } from "react";
 import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
-import { IRole, IRoleTable } from "../../interfaces/IRole";
+import { IRole } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import { Box, Button, IconButton } from "@mui/material";
@@ -20,7 +20,7 @@ type RoleTableProps = {
 };
 
 export const RoleTable = (props: RoleTableProps) => {
-  const columns = useMemo<MRT_ColumnDef<IRoleTable>[]>(
+  const columns = useMemo<MRT_ColumnDef<IRole>[]>(
     () => [
       {
         accessorKey: "roleId",
@@ -55,7 +55,7 @@ export const RoleTable = (props: RoleTableProps) => {
     []
   );
 
-  const [editingRole, setEditingRole] = useState<MRT_Row<IRoleTable>>();
+  const [editingRole, setEditingRole] = useState<MRT_Row<IRole>>();
   const { data: roles } = useQuery<IRole[]>(["roles"]);
   const { data: users } = useQuery<IUser[]>(["users"]);
 
@@ -69,9 +69,9 @@ export const RoleTable = (props: RoleTableProps) => {
   const proccessedData = useMemo(() => {
     if (users == null || users!.length < 0) return [];
     if (roles == null || roles!.length < 0) return [];
-    const dataToDisplay: IRoleTable[] = [];
+    const dataToDisplay: IRole[] = [];
     for (let i = 0; i < roles.length; i++) {
-      const roleRow: IRoleTable = {
+      const roleRow: IRole = {
         roleId: roles[i].roleId,
         roleName: roles[i].roleName,
         description: roles[i].description || "",
@@ -79,7 +79,7 @@ export const RoleTable = (props: RoleTableProps) => {
           .filter((user) => user.role === roles[i].roleName)
           .map((user) => `${user.name.first} ${user.name.last}`),
       };
-      roleRow.usersArray = insertBetween(", ", roleRow.usersArray);
+      roleRow.usersArray = insertBetween(", ", roleRow.usersArray!);
       dataToDisplay.push(roleRow);
     }
     return dataToDisplay;
@@ -102,7 +102,6 @@ export const RoleTable = (props: RoleTableProps) => {
       roleName: values.roleName,
       description: values.description,
     };
-    console.log(editedRole);
     editMutation.mutate(editedRole);
   };
 
@@ -164,7 +163,7 @@ export const RoleTable = (props: RoleTableProps) => {
     ),
     renderTopToolbarCustomActions: ({ table }) => (
       <Button
-        variant="contained"
+        variant="outlined"
         onClick={() => {
           table.setCreatingRow(true);
         }}

@@ -1,46 +1,25 @@
 import {
   Box,
-  Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Slide,
-  TextField,
 } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
 import {
   MRT_EditActionButtons,
   MRT_Row,
   MRT_TableInstance,
 } from "material-react-table";
-import {
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  Ref,
-  useEffect,
-  useState,
-} from "react";
-import { IRoleTable } from "../../interfaces/IRole";
+import { ReactNode, useEffect, useState } from "react";
+import { IRole } from "../../interfaces/IRole";
 
 type RoleEditModalProps = {
-  table: MRT_TableInstance<IRoleTable>;
+  table: MRT_TableInstance<IRole>;
   message?: string;
-  row: MRT_Row<IRoleTable>;
+  row: MRT_Row<IRole>;
   fields: ReactNode[];
   fieldsToExclude: string[];
 };
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement<any, any>;
-  },
-  ref: Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 export const RoleEditModalWindow = (props: RoleEditModalProps) => {
   const [fields1, setFields] = useState<ReactNode[]>([]);
