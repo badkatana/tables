@@ -116,6 +116,7 @@ export const RoleTable = (props: RoleTableProps) => {
       <RoleEditModalWindow
         table={table}
         row={row}
+        fieldsToExclude={["roleId", "user"]}
         fields={internalEditComponents}
       />
     ),

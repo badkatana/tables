@@ -15,14 +15,21 @@ import {
   MRT_Row,
   MRT_TableInstance,
 } from "material-react-table";
-import { forwardRef, ReactElement, ReactNode, Ref, useState } from "react";
+import {
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  Ref,
+  useEffect,
+  useState,
+} from "react";
 import { IRoleTable } from "../../interfaces/IRole";
-import { Rowing } from "@mui/icons-material";
 
 type RoleEditModalProps = {
   table: MRT_TableInstance<IRoleTable>;
   row: MRT_Row<IRoleTable>;
   fields: ReactNode[];
+  fieldsToExclude: string[];
 };
 
 const Transition = forwardRef(function Transition(
@@ -35,12 +42,23 @@ const Transition = forwardRef(function Transition(
 });
 
 export const RoleEditModalWindow = (props: RoleEditModalProps) => {
+  const [fields1, setFields] = useState<ReactNode[]>([]);
+
+  useEffect(() => {
+    const excludedFields = props.fields.filter((field) => {
+      const key = (field as React.ReactElement).key;
+      return !props.fieldsToExclude.some((exclude) => key?.includes(exclude));
+    });
+
+    setFields(excludedFields);
+  }, [props.fields, props.fieldsToExclude]);
+
   return (
     <>
       <DialogTitle>{"Do you really want to delete this entry?"}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Box>{props.fields.map((field) => field)}</Box>
+          <Box>{fields1.map((field) => field)}</Box>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
