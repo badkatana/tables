@@ -1,4 +1,5 @@
 import $host from ".";
+import { IRole } from "../interfaces/IRole";
 import { IUser } from "../interfaces/IUser";
 
 export const getUsers = async (): Promise<IUser[]> => {
@@ -30,4 +31,14 @@ export const updateUser = async (updatedUser: IUser) => {
   );
 
   return response.data;
+};
+
+export const createRole = async (newRole: IRole) => {
+  const { data } = await $host.post("/roles/create", newRole);
+  return data;
+};
+
+export const editRole = async (editedRole: IRole) => {
+  const { data } = await $host.put("/roles/edit", editedRole);
+  return data;
 };

@@ -1,16 +1,18 @@
 import {
   MaterialReactTable,
   MRT_ColumnDef,
+  MRT_Row,
   useMaterialReactTable,
 } from "material-react-table";
 import { useMemo, useState } from "react";
 import { IUser } from "../../interfaces/IUser";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { IRole, IRoleTable } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
-import { Box, IconButton } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { RoleEditModalWindow } from "./RoleModalWindow";
+import { createRole, editRole } from "../../http/functions";
 
 type RoleTableProps = {
   projectName: string;
@@ -53,19 +55,17 @@ export const RoleTable = (props: RoleTableProps) => {
     []
   );
 
+  const [editingRole, setEditingRole] = useState<MRT_Row<IRoleTable>>();
   const { data: roles } = useQuery<IRole[]>(["roles"]);
   const { data: users } = useQuery<IUser[]>(["users"]);
-  const [editModalOpen, setEditModalOpen] = useState<boolean>(true);
-
-  const handleCloseEditModal = (roleName: string, description: string) => {
-    setEditModalOpen(false);
-    console.log(editModalOpen);
-  };
 
   const insertBetween = (ele: string, array: string[]) => {
     return array.flatMap((x) => [ele, x]).slice(1);
   };
 
+  const createMutation = useMutation((newRole: IRole) => createRole(newRole));
+
+  const editMutation = useMutation((editedRole: IRole) => editRole(editedRole));
   const proccessedData = useMemo(() => {
     if (users == null || users!.length < 0) return [];
     if (roles == null || roles!.length < 0) return [];
@@ -85,23 +85,49 @@ export const RoleTable = (props: RoleTableProps) => {
     return dataToDisplay;
   }, [users, roles]);
 
+  const handleCreateRole = (values: any) => {
+    const newRole: IRole = {
+      roleId: roles == null ? 1 : roles!.slice(-1)[0].roleId + 1,
+      roleName: values.roleName,
+      description: values.description,
+    };
+    createMutation.mutate(newRole);
+  };
+
+  const handleEditRole = (values: any) => {
+    const editedRole: IRole = {
+      roleId: editingRole!.original.roleId,
+      roleName: values.roleName,
+      description: values.description,
+    };
+    console.log(editedRole);
+    editMutation.mutate(editedRole);
+  };
+
   const table = useMaterialReactTable({
     columns: columns,
     data: proccessedData || [],
     enableColumnOrdering: true,
     enableStickyHeader: true,
     enableStickyFooter: true,
+    createDisplayMode: "modal",
+    editDisplayMode: "modal",
     state: { columnVisibility: { roleId: false } },
     enableRowActions: true,
     positionActionsColumn: "last",
     onEditingRowSave: ({ table, values }) => {
-      console.log(values);
+      handleEditRole(values);
       table.setEditingRow(null);
+    },
+    onCreatingRowSave: ({ table, values }) => {
+      handleCreateRole(values);
+      table.setCreatingRow(null);
     },
     renderRowActions: ({ row }) => (
       <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
         <IconButton
           onClick={() => {
+            setEditingRole(row);
             table.setEditingRow(row);
           }}
         >
@@ -116,9 +142,29 @@ export const RoleTable = (props: RoleTableProps) => {
       <RoleEditModalWindow
         table={table}
         row={row}
+        message={`Edit Role ${row.original.roleName}`}
         fieldsToExclude={["roleId", "user"]}
         fields={internalEditComponents}
       />
+    ),
+    renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
+      <RoleEditModalWindow
+        table={table}
+        row={row}
+        message={`Create a new role`}
+        fieldsToExclude={["roleId", "user"]}
+        fields={internalEditComponents}
+      />
+    ),
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button
+        variant="contained"
+        onClick={() => {
+          table.setCreatingRow(true);
+        }}
+      >
+        Create New Role
+      </Button>
     ),
   });
 

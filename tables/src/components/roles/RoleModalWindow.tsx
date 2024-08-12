@@ -27,6 +27,7 @@ import { IRoleTable } from "../../interfaces/IRole";
 
 type RoleEditModalProps = {
   table: MRT_TableInstance<IRoleTable>;
+  message?: string;
   row: MRT_Row<IRoleTable>;
   fields: ReactNode[];
   fieldsToExclude: string[];
@@ -55,7 +56,7 @@ export const RoleEditModalWindow = (props: RoleEditModalProps) => {
 
   return (
     <>
-      <DialogTitle>{"Do you really want to delete this entry?"}</DialogTitle>
+      <DialogTitle>{props.message ?? "Modal for Role"}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Box>{fields1.map((field) => field)}</Box>

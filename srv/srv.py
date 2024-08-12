@@ -102,10 +102,10 @@ async def update_user(user_new: User):
     for index, existing_user in enumerate(users_list):
         if existing_user['id'] == user_new.id:
             for key, value in user_new.model_dump().items():
-                if value is not None:  # или используйте проверку на 'undefined'
+                if value is not None:
                     existing_user[key] = value
             save_json(PERSONS_FILE, {"results": users_list})
-            return existing_user  # Возвращаем обновленного пользователя
+            return existing_user
 
     raise HTTPException(status_code=404, detail="User not found")
 
@@ -129,9 +129,28 @@ async def update_roles_users(user_ids: str, role: str):
     return {"results": updated_users}
 
 
-@app.put("/roles/{role_id}", response_model=List[Role])
-async def update_roles(role_id: str, role: str):
-    return "success"
+@app.put("/roles/edit", response_model=List[Role])
+async def update_roles(role: Role):
+    users = load_json(PERSONS_FILE)
+    roles = load_json(ROLES_FILE)
+
+    old_role_name = next((oldRole['roleName'] for oldRole in roles if oldRole.get(
+        'roleId') == role.roleId), None)
+
+    roles = [oldRole for oldRole in roles if oldRole.get(
+        'roleId') != role.roleId]
+
+    roles.append(role.model_dump())
+
+    if old_role_name:
+        for user in users["results"]:
+            if user["role"] == old_role_name:
+                user['role'] = role.roleName
+    roles = sorted(roles, key=lambda x: x['roleId'])
+    save_json(PERSONS_FILE, users)
+    save_json(ROLES_FILE, roles)
+
+    return roles
 
 
 @app.delete("/users/{user_id}")
