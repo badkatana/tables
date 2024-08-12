@@ -1,15 +1,9 @@
 import $host from ".";
-import { IRole } from "../interfaces/IRole";
 import { IUser } from "../interfaces/IUser";
 
 export const getUsers = async (): Promise<IUser[]> => {
   const { data } = await $host.get("/users");
   return data.results;
-};
-
-export const getRoles = async () => {
-  const { data } = await $host.get("/roles");
-  return data;
 };
 
 export const updateUsersRoles = async (usersId: string, role: string) => {
@@ -31,19 +25,4 @@ export const updateUser = async (updatedUser: IUser) => {
   );
 
   return response.data;
-};
-
-export const createRole = async (newRole: IRole) => {
-  const { data } = await $host.post("/roles/create", newRole);
-  return data;
-};
-
-export const editRole = async (editedRole: IRole) => {
-  const { data } = await $host.put("/roles/edit", editedRole);
-  return data;
-};
-
-export const deleteRole = async (RoleToDeleteId: string) => {
-  const { data } = await $host.delete(`/roles/${RoleToDeleteId}`);
-  return data;
 };

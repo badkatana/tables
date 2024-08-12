@@ -8,7 +8,7 @@ import {
 import { Box, Button, IconButton, MenuItem, Select } from "@mui/material";
 import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
-import { deleteUser, updateUser, updateUsersRoles } from "../../http/functions";
+import { deleteUser, updateUser, updateUsersRoles } from "../../http/userAPI";
 import { IRole } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
