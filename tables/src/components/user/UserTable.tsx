@@ -13,6 +13,7 @@ import { IRole } from "../../interfaces/IRole";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import { DeleteUserModal } from "./deleteUserModal/deleteUserModal";
+import { NotifyUser } from "../notifications/snackbar";
 
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
@@ -23,6 +24,7 @@ export const UserTable = () => {
   const { data: userData } = useQuery<IUser[]>(["users"]);
   const { data: roles } = useQuery<IRole[]>(["roles"]);
   const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>();
 
   useEffect(() => {
     if (Object.keys(rowSelection).length) {
@@ -41,13 +43,17 @@ export const UserTable = () => {
       updateUsersRoles(data.userIds, data.role),
     {
       onSuccess: (data) => {
-        console.log("Users updated successfully:", data);
+        setSnackbarMessage("Successfully updated!");
       },
       onError: (error) => {
-        console.error("Error updating users:", error);
+        setSnackbarMessage("Error updating users");
       },
     }
   );
+
+  const handleCloseSnackbar = () => {
+    setSnackbarMessage(null);
+  };
 
   const deleteMutation = useMutation((userId: string) => deleteUser(userId), {
     onSuccess: (data) => {
@@ -61,10 +67,10 @@ export const UserTable = () => {
   const updateMutation = useMutation({
     mutationFn: (updatedData: IUser) => updateUser(updatedData),
     onSuccess: () => {
-      console.log("к");
+      setSnackbarMessage("User deleted successfully");
     },
     onError: (error) => {
-      console.log("error here");
+      setSnackbarMessage("Error deleting user");
     },
   });
 
@@ -155,7 +161,7 @@ export const UserTable = () => {
     if (confirmed) {
       deleteMutation.mutate(personToDelete!.id);
       const updatedData = data!.filter(
-        (person) => person.id != personToDelete!.id
+        (person) => person.id !== personToDelete!.id
       );
       setData(updatedData);
     }
@@ -201,6 +207,12 @@ export const UserTable = () => {
         handleClose={handleUserDelete}
       />
       <MaterialReactTable table={table} />;
+      <NotifyUser
+        open={snackbarMessage == null ? false : true}
+        message={snackbarMessage!}
+        onClose={handleCloseSnackbar}
+      />
+      ;
     </Box>
   );
 };
