@@ -7,16 +7,15 @@ import {
   MRT_RowSelectionState,
   useMaterialReactTable,
 } from "material-react-table";
-import { Box, Button, IconButton, MenuItem, Select } from "@mui/material";
+import { Box, Button, MenuItem, Select } from "@mui/material";
 import { IUser } from "../../interfaces/IUser";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { deleteUser, updateUser, updateUsersRoles } from "../../http/userAPI";
-import { IRole } from "../../interfaces/IRole";
 import { DeleteUserModal } from "./deleteUserModal";
 import { NotifyUser } from "../generic/snackbar";
 import useUser from "../../hooks/useUser";
 import { isEmpty } from "../../lib/arrayFunctions";
-import { TableActionButton } from "../generic/TableActionButton";
+import { UserTableAction } from "./UserTableAction";
 import { useRoles } from "../../hooks/useRoles";
 
 export const UserTable = () => {
@@ -105,11 +104,7 @@ export const UserTable = () => {
       table.setEditingRow(null);
     },
     renderRowActions: ({ row }) => (
-      <TableActionButton
-        table={table}
-        row={row}
-        onDelete={handleDeleteAction}
-      />
+      <UserTableAction table={table} row={row} onDelete={handleDeleteAction} />
     ),
   });
 

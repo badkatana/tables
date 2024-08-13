@@ -3,11 +3,6 @@ import "./App.css";
 import { UserTable } from "./components/user/UserTable";
 import { SyntheticEvent, useState } from "react";
 import { RoleTable } from "./components/roles/RoleTable";
-import { useQuery } from "react-query";
-import { getUsers } from "./http/userAPI";
-import { getRoles } from "./http/roleAPI";
-import { IUser } from "./interfaces/IUser";
-import { IRole } from "./interfaces/IRole";
 import useUser from "./hooks/useUser";
 import { useRoles } from "./hooks/useRoles";
 
@@ -27,7 +22,7 @@ function App() {
     setSelectedTab(value);
   };
 
-  if (rolesLoading) {
+  if (isLoading) {
     return (
       <Box>
         <Typography>Please wait...</Typography>

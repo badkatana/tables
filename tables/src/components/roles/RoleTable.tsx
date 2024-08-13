@@ -4,11 +4,11 @@ import {
   MRT_Row,
   useMaterialReactTable,
 } from "material-react-table";
-import { useMemo, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMemo } from "react";
+import { useMutation } from "react-query";
 import { IRole } from "../../interfaces/IRole";
 import { RoleEditModalWindow } from "./RoleModalWindow";
-import { createRole, deleteRole, editRole } from "../../http/roleAPI";
+import { createRole, editRole } from "../../http/roleAPI";
 import { useRoles } from "../../hooks/useRoles";
 import { RoleTableToolbar } from "./RoleTableToolbar";
 import { RoleTableActions } from "./RoleTableAction";
