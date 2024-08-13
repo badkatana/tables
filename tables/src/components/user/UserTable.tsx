@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   LiteralUnion,
   MaterialReactTable,
@@ -7,30 +7,24 @@ import {
   MRT_RowSelectionState,
   useMaterialReactTable,
 } from "material-react-table";
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/material";
 import { IUser } from "../../interfaces/IUser";
 import { useMutation } from "react-query";
 import { deleteUser, updateUser, updateUsersRoles } from "../../http/userAPI";
 import { DeleteUserModal } from "./deleteUserModal";
-import { NotifyUser } from "../generic/snackbar";
+import { NotifyUser } from "../notification/snackbar";
 import useUser from "../../hooks/useUser";
-import { isEmpty } from "../../lib/arrayFunctions";
-import { UserTableAction } from "./UserTableAction";
+import { UserTableAction } from "./UserTableOptions/UserTableAction";
 import { useRoles } from "../../hooks/useRoles";
+import { UserRoleSelect } from "./UserTableOptions/UserRoleSelect";
 
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
-  const [roleSelectOpen, setRoleSelectOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState<IUser>();
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>();
   const { roles } = useRoles();
   const { users } = useUser();
-  const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
-  const [snackbarMessage, setSnackbarMessage] = useState<string | null>();
-
-  useEffect(() => {
-    setRoleSelectOpen(isEmpty(rowSelection));
-  }, [rowSelection]);
 
   const mutation = useMutation(
     (data: { userIds: string; role: string }) =>
@@ -117,7 +111,7 @@ export const UserTable = () => {
     setDeleteModalVisible(false);
   };
 
-  const handleSelectionClick = () => {
+  const handleSelectionClick = (selectedRole: string) => {
     const rowIndexed = Object.keys(rowSelection).map((key) => parseInt(key));
     const userIds1 = [];
 
@@ -130,28 +124,20 @@ export const UserTable = () => {
     const role = selectedRole;
 
     mutation.mutate({ userIds, role });
-
-    setSelectedRole(roles![0].roleName);
     setRowSelection({});
+  };
+
+  const openRoleSelection = () => {
+    return Object.keys(rowSelection).length > 0 && roles != null;
   };
 
   return (
     <Box>
-      {roleSelectOpen && roles != null ? (
-        <Box>
-          <Select defaultValue={roles[0].roleName}>
-            {roles.map((role) => (
-              <MenuItem
-                value={role.roleName}
-                onClick={() => setSelectedRole(role.roleName)}
-              >
-                {role.roleName}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button onClick={(e) => handleSelectionClick()}>Confirm</Button>
-          <Button onClick={(e) => setRowSelection({})}>Cancel</Button>
-        </Box>
+      {openRoleSelection() ? (
+        <UserRoleSelect
+          handleSelectionEvent={handleSelectionClick}
+          handleCanselEvent={setRowSelection}
+        />
       ) : null}
       <DeleteUserModal
         open={deleteModalVisible}

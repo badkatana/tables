@@ -10,8 +10,9 @@ import { IRole } from "../../interfaces/IRole";
 import { RoleEditModalWindow } from "./RoleModalWindow";
 import { createRole, editRole } from "../../http/roleAPI";
 import { useRoles } from "../../hooks/useRoles";
-import { RoleTableToolbar } from "./RoleTableToolbar";
-import { RoleTableActions } from "./RoleTableAction";
+import { RoleTableToolbar } from "./RoleTableOptions/RoleTableToolbar";
+import { RoleTableActions } from "./RoleTableOptions/RoleTableAction";
+import { createNumericId } from "../../lib/lib";
 
 export const RoleTable = () => {
   const columns = useMemo<MRT_ColumnDef<IRole>[]>(() => columnsList, []);
@@ -24,7 +25,7 @@ export const RoleTable = () => {
     description: string;
   }) => {
     const newRole: IRole = {
-      roleId: roles == null ? 1 : roles!.slice(-1)[0].roleId + 1,
+      roleId: createNumericId(roles, "roleId"),
       roleName: values.roleName,
       description: values.description,
     };

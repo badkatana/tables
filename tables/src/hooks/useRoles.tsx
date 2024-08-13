@@ -1,10 +1,7 @@
 import { useMemo } from "react";
 import { IRole } from "../interfaces/IRole";
 import { useQuery } from "react-query";
-import {
-  getUsersWithSomeFieldValue,
-  IsArrayEmpty,
-} from "../lib/arrayFunctions";
+import { getUsersWithSomeFieldValue, IsArrayEmpty } from "../lib/lib";
 import { getRoles } from "../http/roleAPI";
 import useUser from "./useUser";
 

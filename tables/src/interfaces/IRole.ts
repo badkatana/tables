@@ -1,6 +1,6 @@
 export interface IRole {
   roleName: string;
-  roleId: number;
+  roleId: string;
   description?: string;
   usersArray?: string[] | null;
 }

@@ -1,5 +1,5 @@
 import { MRT_TableInstance } from "material-react-table";
-import { IRole } from "../../interfaces/IRole";
+import { IRole } from "../../../interfaces/IRole";
 import { Button } from "@mui/material";
 
 export const RoleTableToolbar = (props: {
