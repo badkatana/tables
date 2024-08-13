@@ -61,10 +61,10 @@ export const UserTable = () => {
   const updateMutation = useMutation({
     mutationFn: (updatedData: IUser) => updateUser(updatedData),
     onSuccess: () => {
-      setSnackbarMessage("User deleted successfully");
+      setSnackbarMessage("User updated successfully");
     },
     onError: (error) => {
-      setSnackbarMessage("Error deleting user");
+      setSnackbarMessage("Error updating user");
     },
   });
 

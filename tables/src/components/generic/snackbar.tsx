@@ -19,7 +19,7 @@ const Transition = forwardRef(function Transition(
 
 export const NotifyUser = (props: NotifyUserProps) => {
   return (
-    <Box sx={{ width: 300 }}>
+    <>
       <Snackbar
         open={props.open}
         onClose={props.onClose}
@@ -27,6 +27,6 @@ export const NotifyUser = (props: NotifyUserProps) => {
         TransitionComponent={Transition}
         message={props.message}
       />
-    </Box>
+    </>
   );
 };
