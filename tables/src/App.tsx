@@ -8,6 +8,8 @@ import { getUsers } from "./http/userAPI";
 import { getRoles } from "./http/roleAPI";
 import { IUser } from "./interfaces/IUser";
 import { IRole } from "./interfaces/IRole";
+import useUser from "./hooks/useUser";
+import { useRoles } from "./hooks/useRoles";
 
 function TabsProps(index: number) {
   return {
@@ -18,26 +20,21 @@ function TabsProps(index: number) {
 
 function App() {
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const { data, error, isLoading } = useQuery<IUser[], Error>({
-    queryKey: ["users"],
-    queryFn: getUsers,
-  });
-
-  const {
-    data: roles,
-    error: rolesError,
-    isLoading: rolesLoading,
-  } = useQuery<IRole[], Error>({
-    queryKey: ["roles"],
-    queryFn: getRoles,
-  });
+  const { error, isLoading } = useUser();
+  const { rolesError, rolesLoading } = useRoles();
 
   const handleChange = (e: SyntheticEvent, value: any) => {
     setSelectedTab(value);
   };
 
-  if (isLoading || rolesLoading) {
+  if (rolesLoading) {
+    return (
+      <Box>
+        <Typography>Please wait...</Typography>
+      </Box>
+    );
+  }
+  if (rolesLoading) {
     return (
       <Box>
         <Typography>Please wait...</Typography>
@@ -45,15 +42,20 @@ function App() {
     );
   }
 
-  if (error || rolesError) {
+  if (error) {
     return (
       <Box>
         <Typography>Error getting users</Typography>
-        <Typography>
-          {error
-            ? `Error fetching users: ${error.message}`
-            : `Error fetching roles: ${rolesError?.message}`}
-        </Typography>
+        <Typography>`Error fetching users: ${error.message}`</Typography>
+      </Box>
+    );
+  }
+
+  if (rolesError) {
+    return (
+      <Box>
+        <Typography>Error getting users</Typography>
+        <Typography>`Error fetching roles: ${rolesError.message}`</Typography>
       </Box>
     );
   }
@@ -72,11 +74,7 @@ function App() {
           </Tabs>
         </Box>
       </Box>
-      {selectedTab === 0 ? (
-        <UserTable />
-      ) : (
-        <RoleTable projectName="smthg" users={data!} />
-      )}
+      {selectedTab === 0 ? <UserTable /> : <RoleTable />}
     </Box>
   );
 }

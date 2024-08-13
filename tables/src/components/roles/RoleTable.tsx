@@ -5,85 +5,19 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useMemo, useState } from "react";
-import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
 import { IRole } from "../../interfaces/IRole";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
-import { Box, Button, IconButton } from "@mui/material";
 import { RoleEditModalWindow } from "./RoleModalWindow";
 import { createRole, deleteRole, editRole } from "../../http/roleAPI";
+import { useRoles } from "../../hooks/useRoles";
+import { RoleTableToolbar } from "./RoleTableToolbar";
+import { RoleTableActions } from "./RoleTableAction";
 
-type RoleTableProps = {
-  projectName: string;
-  users: IUser[];
-};
-
-export const RoleTable = (props: RoleTableProps) => {
-  const columns = useMemo<MRT_ColumnDef<IRole>[]>(
-    () => [
-      {
-        accessorKey: "roleId",
-        header: "ID",
-        enableEditing: false,
-        enableSotring: false,
-      },
-      {
-        accessorKey: "roleName",
-        header: "Role",
-        muiEditTextFieldProps: {
-          required: true,
-          type: "string",
-          variant: "outlined",
-        },
-      },
-      {
-        accessorKey: "usersArray",
-        header: "Users",
-        enableEditing: false,
-      },
-      {
-        accessorKey: "description",
-        header: "Description",
-        muiEditTextFieldProps: {
-          required: true,
-          type: "string",
-          variant: "outlined",
-        },
-      },
-    ],
-    []
-  );
-
-  const [editingRole, setEditingRole] = useState<MRT_Row<IRole>>();
-  const { data: roles } = useQuery<IRole[]>(["roles"]);
-  const { data: users } = useQuery<IUser[]>(["users"]);
-
-  const insertBetween = (ele: string, array: string[]) => {
-    return array.flatMap((x) => [ele, x]).slice(1);
-  };
-
+export const RoleTable = () => {
+  const columns = useMemo<MRT_ColumnDef<IRole>[]>(() => columnsList, []);
   const createMutation = useMutation((newRole: IRole) => createRole(newRole));
-
   const editMutation = useMutation((editedRole: IRole) => editRole(editedRole));
-  const proccessedData = useMemo(() => {
-    if (users == null || users!.length < 0) return [];
-    if (roles == null || roles!.length < 0) return [];
-    const dataToDisplay: IRole[] = [];
-    for (let i = 0; i < roles.length; i++) {
-      const roleRow: IRole = {
-        roleId: roles[i].roleId,
-        roleName: roles[i].roleName,
-        description: roles[i].description || "",
-        usersArray: users
-          .filter((user) => user.role === roles[i].roleName)
-          .map((user) => `${user.name.first} ${user.name.last}`),
-      };
-      roleRow.usersArray = insertBetween(", ", roleRow.usersArray!);
-      dataToDisplay.push(roleRow);
-    }
-    return dataToDisplay;
-  }, [users, roles]);
+  const { roles } = useRoles();
 
   const handleCreateRole = (values: {
     roleName: string;
@@ -97,14 +31,15 @@ export const RoleTable = (props: RoleTableProps) => {
     createMutation.mutate(newRole);
   };
 
-  const deleteMutation = useMutation((roleId: string) => deleteRole(roleId));
-
-  const handleEditRole = (values: {
-    roleName: string;
-    description: string;
-  }) => {
+  const handleEditRole = (
+    values: {
+      roleName: string;
+      description: string;
+    },
+    row: MRT_Row<IRole>
+  ) => {
     const editedRole: IRole = {
-      roleId: editingRole!.original.roleId,
+      roleId: row.original.roleId,
       roleName: values.roleName,
       description: values.description,
     };
@@ -113,42 +48,24 @@ export const RoleTable = (props: RoleTableProps) => {
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: proccessedData || [],
+    data: roles || [],
     enableColumnOrdering: true,
     enableStickyHeader: true,
     enableStickyFooter: true,
     createDisplayMode: "modal",
     editDisplayMode: "modal",
-    state: { columnVisibility: { roleId: false } },
     enableRowActions: true,
+    state: { columnVisibility: { roleId: false } },
     positionActionsColumn: "last",
-    onEditingRowSave: ({ table, values }) => {
-      handleEditRole(values);
+    onEditingRowSave: ({ table, values, row }) => {
+      handleEditRole(values, row);
       table.setEditingRow(null);
     },
     onCreatingRowSave: ({ table, values }) => {
       handleCreateRole(values);
       table.setCreatingRow(null);
     },
-    renderRowActions: ({ row }) => (
-      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
-        <IconButton
-          onClick={() => {
-            setEditingRole(row);
-            table.setEditingRow(row);
-          }}
-        >
-          <CreateRoundedIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            deleteMutation.mutate(row.original.roleId.toString());
-          }}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Box>
-    ),
+    renderRowActions: ({ row }) => <RoleTableActions table={table} row={row} />,
     renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
       <RoleEditModalWindow
         table={table}
@@ -168,16 +85,30 @@ export const RoleTable = (props: RoleTableProps) => {
       />
     ),
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          table.setCreatingRow(true);
-        }}
-      >
-        Create New Role
-      </Button>
+      <RoleTableToolbar table={table} />
     ),
   });
 
   return <MaterialReactTable table={table} />;
 };
+
+const columnsList: MRT_ColumnDef<IRole>[] = [
+  {
+    accessorKey: "roleId",
+    header: "ID",
+    enableEditing: false,
+  },
+  {
+    accessorKey: "roleName",
+    header: "Role",
+  },
+  {
+    accessorKey: "usersArray",
+    header: "Users",
+    enableEditing: false,
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
+];

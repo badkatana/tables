@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+  LiteralUnion,
   MaterialReactTable,
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
   useMaterialReactTable,
 } from "material-react-table";
@@ -10,33 +12,26 @@ import { IUser } from "../../interfaces/IUser";
 import { useMutation, useQuery } from "react-query";
 import { deleteUser, updateUser, updateUsersRoles } from "../../http/userAPI";
 import { IRole } from "../../interfaces/IRole";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import { DeleteUserModal } from "./deleteUserModal";
 import { NotifyUser } from "../generic/snackbar";
+import useUser from "../../hooks/useUser";
+import { isEmpty } from "../../lib/arrayFunctions";
+import { TableActionButton } from "../generic/TableActionButton";
+import { useRoles } from "../../hooks/useRoles";
 
 export const UserTable = () => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
   const [roleSelectOpen, setRoleSelectOpen] = useState(false);
-  const [data, setData] = useState<IUser[]>();
   const [personToDelete, setPersonToDelete] = useState<IUser>();
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
-  const { data: userData } = useQuery<IUser[]>(["users"]);
-  const { data: roles } = useQuery<IRole[]>(["roles"]);
+  const { roles } = useRoles();
+  const { users } = useUser();
   const [selectedRole, setSelectedRole] = useState(roles![0].roleName || "");
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>();
 
   useEffect(() => {
-    if (Object.keys(rowSelection).length) {
-      setRoleSelectOpen(true);
-    } else {
-      setRoleSelectOpen(false);
-    }
+    setRoleSelectOpen(isEmpty(rowSelection));
   }, [rowSelection]);
-
-  useEffect(() => {
-    setData(userData);
-  }, [userData]);
 
   const mutation = useMutation(
     (data: { userIds: string; role: string }) =>
@@ -74,43 +69,8 @@ export const UserTable = () => {
     },
   });
 
-  const columns = useMemo<MRT_ColumnDef<IUser>[]>(
-    () => [
-      {
-        accessorKey: "id",
-        header: "ID",
-        enableEditing: false,
-        enableSorting: false,
-        size: 0,
-      },
-      {
-        accessorKey: "name.first",
-        header: "First Name",
-      },
-      {
-        accessorKey: "name.last",
-        header: "Last Name",
-      },
-      {
-        accessorKey: "email",
-        header: "Email",
-      },
-      {
-        accessorKey: "role",
-        header: "Role",
-        enableEditing: false,
-      },
-      {
-        accessorKey: "accessibility",
-        header: "Accessibility",
-        enableEditing: false,
-      },
-    ],
-    []
-  );
-
-  const handleRowUpdating = (values: any) => {
-    const userToUpdate = data!.find((user) => user.id === values.id);
+  const handleRowUpdating = (values: Record<LiteralUnion<string>, string>) => {
+    const userToUpdate = users!.find((user) => user.id === values.id);
     if (userToUpdate) {
       userToUpdate.name.first = values["name.first"];
       userToUpdate.name.last = values["name.last"];
@@ -120,9 +80,16 @@ export const UserTable = () => {
     }
   };
 
+  const handleDeleteAction = (row: MRT_Row<IUser>) => {
+    setPersonToDelete(users![row.index]);
+    setDeleteModalVisible(true);
+  };
+
+  const columns = useMemo<MRT_ColumnDef<IUser>[]>(() => columnsList, []);
+
   const table = useMaterialReactTable({
     columns: columns,
-    data: data || [],
+    data: users || [],
     defaultDisplayColumn: { enableResizing: true },
     enableColumnResizing: true,
     enableColumnOrdering: true,
@@ -138,33 +105,18 @@ export const UserTable = () => {
       table.setEditingRow(null);
     },
     renderRowActions: ({ row }) => (
-      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
-        <IconButton
-          onClick={() => {
-            table.setEditingRow(row);
-          }}
-        >
-          <CreateRoundedIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            setPersonToDelete(data![row.index]);
-            setDeleteModalVisible(true);
-          }}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Box>
+      <TableActionButton
+        table={table}
+        row={row}
+        onDelete={handleDeleteAction}
+      />
     ),
   });
 
   const handleUserDelete = (confirmed: boolean) => {
     if (confirmed) {
       deleteMutation.mutate(personToDelete!.id);
-      const updatedData = data!.filter(
-        (person) => person.id !== personToDelete!.id
-      );
-      setData(updatedData);
+      users!.filter((person) => person.id !== personToDelete!.id);
     }
     setPersonToDelete(undefined);
     setDeleteModalVisible(false);
@@ -173,14 +125,17 @@ export const UserTable = () => {
   const handleSelectionClick = () => {
     const rowIndexed = Object.keys(rowSelection).map((key) => parseInt(key));
     const userIds1 = [];
+
     for (let i = 0; i < rowIndexed.length; i++) {
-      userIds1.push(userData![rowIndexed[i]].id);
-      data![rowIndexed[i]].role = selectedRole;
+      userIds1.push(users![rowIndexed[i]].id);
+      users![rowIndexed[i]].role = selectedRole;
     }
-    setData([...data!]);
+
     const userIds = userIds1.join(",");
     const role = selectedRole;
+
     mutation.mutate({ userIds, role });
+
     setSelectedRole(roles![0].roleName);
     setRowSelection({});
   };
@@ -213,7 +168,38 @@ export const UserTable = () => {
         message={snackbarMessage!}
         onClose={handleCloseSnackbar}
       />
-      ;
     </Box>
   );
 };
+
+const columnsList = [
+  {
+    accessorKey: "id",
+    header: "ID",
+    enableEditing: false,
+    enableSorting: false,
+    size: 0,
+  },
+  {
+    accessorKey: "name.first",
+    header: "First Name",
+  },
+  {
+    accessorKey: "name.last",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+    enableEditing: false,
+  },
+  {
+    accessorKey: "accessibility",
+    header: "Accessibility",
+    enableEditing: false,
+  },
+];
